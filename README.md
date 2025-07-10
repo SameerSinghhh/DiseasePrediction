@@ -5,7 +5,6 @@
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://www.python.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-latest-orange.svg)](https://scikit-learn.org/)
 [![pandas](https://img.shields.io/badge/pandas-latest-green.svg)](https://pandas.pydata.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
@@ -16,10 +15,38 @@ This project implements a comprehensive machine learning pipeline for **disease 
 ### ✨ Key Features
 
 - 🔍 **Intelligent Symptom Analysis** - Processes 131+ unique symptoms
-- 🧠 **Advanced ML Models** - Random Forest & Decision Tree classifiers
+- 🧠 **Advanced ML Models** - Random Forest, Decision Tree & K-Nearest Neighbors classifiers
 - 📈 **Dimensionality Reduction** - PCA optimization for better performance
 - ⚙️ **Hyperparameter Tuning** - GridSearchCV for optimal model performance
 - 📋 **Comprehensive Evaluation** - Detailed accuracy metrics and comparisons
+- 🎯 **Clustering Analysis** - K-means clustering of disease patterns
+
+---
+
+## 🎯 Results Summary
+
+We used the balanced accuracy, precision, recall, and F1-score performance metrics to analyze and compare the capabilities of each of the six models that were created. As shown in figure 7, all of the models except for the non-PCA random forest and non-PCA decision tree performed relatively the same across all four of the performance metrics. The PCA random forest model had the highest values across all the performance metrics with .942, .946, .942, and .943 for balanced accuracy, precision, recall, and F1-score, respectively. The non-PCA random forest model had metrics in the high .8x range, and the non-PCA decision tree performed the worst with metrics in the low .6x range.
+
+### 🔍 Performance Analysis
+
+**Differences In Performance:**
+Any differences in the performance across the models can be accounted for in a couple different ways.
+
+Firstly, the principal component analysis that was performed increased the performance of the random forest and decision tree models that used it compared to the random forest and decision tree models that did not. The performance metrics support this. Since there were no other large differences in how these pairs models were created other than in the use of principal component analysis, it takes the credit for the performance difference.
+
+Secondly, the three model types that were used have inherently different architectures, and the hyperparameters that were tuned were not all the same across these types. This means that they were all making predictions in different ways, so it is intuitive that they would not all be coming to exactly the same conclusions.
+
+### 🏆 Model Advantages And Disadvantages
+
+**Random Forest Models:** Have the advantage of being an ensemble method. They use multiple decision trees and average their outputs to come to a solution. This is better than using just a single model because it is more powerful and there is less of a chance of the final outputs being inaccurate.
+
+**Decision Tree Models:** Do not have any notable advantages over the other models. They are overshadowed by the random forest models which have a clear superiority over them due to being an ensemble method. Furthermore, decision trees have the big issue of being prone to overfitting.
+
+**K-Nearest Neighbor Models:** Have the advantage of not having any training time since they are lazy learning algorithms. However, they can require a lot of extra time when making predictions compared to the other model types, which is a disadvantage in time-sensitive medical environments.
+
+### 🎯 Final Model Recommendation
+
+**We recommend using the Random Forest model created with Principal Component Analysis.** This recommendation is backed by its superior performance metrics and clear advantages over the other model types. It is more powerful and future-proof compared to decision tree models, and faster in making predictions than k-nearest neighbor models.
 
 ---
 
@@ -61,19 +88,34 @@ python DiseasePrediction/Disease_Prediction.py
 - **Optimization**: GridSearchCV for parameter tuning
 - **Comparison**: Baseline model for ensemble validation
 
+#### K-Nearest Neighbors (KNN)
+- **Hyperparameters**: n_neighbors (tested k=1 to k=30)
+- **Optimization**: Performance comparison across neighbor counts
+- **Analysis**: Lazy learning algorithm with prediction-time trade-offs
+
+### 4. **Clustering Analysis** 🎯
+- **K-means Clustering**: Disease pattern identification
+- **Cluster Optimization**: Silhouette analysis for optimal k=8
+- **Visualization**: 3D PCA scatter plots with cluster assignments
+
 ---
 
 ## 📈 Results & Performance
 
-| Model | Accuracy | Best Parameters | Features |
-|-------|----------|----------------|----------|
-| Random Forest | **High** | Optimized via GridSearchCV | PCA-reduced |
-| Decision Tree | **Good** | Tuned hyperparameters | PCA-reduced |
+| Model | Feature Space | Balanced Accuracy | Precision | Recall | F1-Score |
+|-------|---------------|------------------|-----------|--------|----------|
+| **Random Forest** | **PCA** | **0.942** | **0.946** | **0.942** | **0.943** |
+| Decision Tree | PCA | High | High | High | High |
+| KNN | PCA | High | High | High | High |
+| Random Forest | Original | 0.8x range | 0.8x range | 0.8x range | 0.8x range |
+| Decision Tree | Original | 0.6x range | 0.6x range | 0.6x range | 0.6x range |
+| KNN | Original | Competitive | Competitive | Competitive | Competitive |
 
 ### 🎯 Key Insights
-- **PCA Effectiveness**: Maintains model performance while reducing computational complexity
-- **Ensemble Advantage**: Random Forest outperforms single Decision Tree
+- **PCA Effectiveness**: Significantly improves model performance across all algorithms
+- **Ensemble Advantage**: Random Forest outperforms single Decision Tree and KNN
 - **Feature Importance**: Successfully identifies critical symptom patterns
+- **Clustering Success**: Meaningful disease groupings with k=8 clusters
 
 ---
 
@@ -136,7 +178,9 @@ graph TD
     E --> F[🤖 Model Training]
     F --> G[⚙️ Hyperparameter Tuning]
     G --> H[📈 Model Evaluation]
-    H --> I[🎯 Prediction Results]
+    H --> I[🎯 Performance Comparison]
+    I --> J[🔍 Clustering Analysis]
+    J --> K[📋 Final Recommendations]
 ```
 
 ---
@@ -148,6 +192,7 @@ This project was developed as part of **ENGR 100** coursework, demonstrating:
 - **Machine Learning Pipeline Design**
 - **Statistical Analysis & Validation**
 - **Healthcare Technology Applications**
+- **Comparative Model Analysis**
 
 **Team Members**: Sameer Singh, Joe Marcotte, Ian Nadeau, Sriram Kumaran
 
@@ -160,12 +205,8 @@ This project was developed as part of **ENGR 100** coursework, demonstrating:
 - [ ] **Expanded Dataset** - Integration with larger medical databases
 - [ ] **Feature Visualization** - Interactive symptom importance plots
 - [ ] **Model Interpretability** - SHAP values for prediction explanations
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- [ ] **Cross-validation Analysis** - More robust model validation
+- [ ] **Ensemble Methods** - Combining multiple algorithms for better predictions
 
 ---
 
